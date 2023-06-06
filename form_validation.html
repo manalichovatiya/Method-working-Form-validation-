@@ -1,244 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Form Validation</title>
-</head>
-<body>
-  <style>
-    .form{padding-top: 20px;align-items: flex-start;box-shadow: 1px 0.5px 10px 0.5px black;border-radius: 15px;height: 100%;width: 37%; padding-bottom: 50px; margin-left:30px;}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+ </head>
+<style>
+  .row{display: flex; flex-wrap: wrap;}
+   .form{padding-top: 20px;align-items: flex-start;box-shadow: 1px 0.5px 10px 0.5px black;border-radius: 15px;height: 100%;width: 37%; padding-bottom: 50px; margin-left:30px;}
+   .table_d{width: 50%; margin-top: 200px; margin-left: 30px;}
     h1{color: #3d3c39;padding-bottom: 20px;}
     .required_details{display: none;font-size: 15px;color: red;text-transform: uppercase;margin-right: 150px;}
     label{color: rgb(9, 9, 9);font-size: 20px;margin-bottom: 20px;margin-right: 200px;}
     input{margin-top: 20px;font-size: 20px;margin-bottom: 20px;padding: 10px;padding-left: 20px;height: 30px;border: 1px solid black;border-radius: 5px;box-shadow: 1px 2px 1px 2px black;}
     button{font-size:20px;padding-top: 10px;padding-bottom: 40px;padding-left: 20px;padding-right: 20px;color: white;background: #3d3c39;height: 40px;border-radius: 20px;cursor: pointer;font-weight: 900;box-shadow: 6px 6px 6px #cbced1, -6px -6px 6px white;margin-top: 10px;}
     .data{margin-top: 20px;}
-  </style>
-
+</style>
+<body>
+  <div class="row">
     <div class="form">
       <h1 style="text-align: center;">Form Validation</h1>
-        <form name="myForm" style="text-align: center;">
-          <label>First Name :</label></br>
-          <input type="text" id="f_Name" required >
-          <span class="required_details" id="red1">* Enter valid name </span></br>
-
-          <label>Last Name :</label></br>
-          <input type="text" id="l_Name" required >
-          <span class="required_details" id="red1_1">* Enter valid name </span></br>  
-
-          <label>Gender :</label></br>
-          <span>Male</span><input id="Gender_1" name="Gender" type="radio" value="Male"  required>
-          <span>Female</span><input id="Gender_1" name="Gender" type="radio" value="Female" checked required>
-          <span>Others</span><input id="Gender_1" name="Gender" type="radio" value="Others" required>
-          <span class="required_details" id="red_g">* select gender </span></br> 
-
-          <label>Phone :</label></br>
-          <input type="text" id="p_input" minlength="10" maxlength="10" required>
-          <span class="required_details" id="red2">* Enter 10 digits</span></br>
-
-          <label>Email :</label></br>
-          <input type="email" id="e_input" required >
-          <span class="required_details" id="red3">* Enter email with @ and gmail.com </span></br>
-
-          <span>Birthdate : </span></br>
-          <input id="dob_input" type="date" name="dob" required>            
-          <span class="required_details" id="red_b">* Enter birthdate</span></br>
-
-          <button type="button" onclick="Form_validate(event)">SUBMIT</button>
-          <button type="button" onclick="view_data()">viewdata</button>
-          <button type="button" class="data" onclick="data_of21th()">show data of 21<sup>th</sup>century</button>
-        </form>
-    </div>
-    <div class="tabledata">
-      <table style="display: none;" id="table_of_data" align="center" border="0">
-        <tbody id="table_data"></tbody>
-    </table>
-    </div>
-  <script>
-    function Form_validate(event) {
-      event.preventDefault(); //  is used to prevent the default submission behavior of a form when the submit button is clicked. 
-      name_check();
-      gender_check();
-      phone_check();
-      email_check();
-      dob_check();
-    }
-    
-function name_check(){
-  let name_match_f = document.forms["myForm"]["f_Name"].value;
-  let name_match_l = document.forms["myForm"]["l_Name"].value;
-  let nameRegex = /^[a-zA-Z]{4,30}$/;// Regular expressions for validation   // Allows letters only with limit
-
-  if (!nameRegex.test(name_match_f)) { //test method is use for match in a string  //If it finds a match, it returns true, otherwise it returns false.
-        // console.log("name is not valid.");   // it will not execute cause of test method   // solution is preventDefault
-        document.getElementById('red1').style.display = "block";
-      }
-  if(!nameRegex.test(name_match_l)){
-    document.getElementById('red1_1').style.display = "block";
-  }
-  else{
-    console.log("name ok");
-  }
-}
-
-function gender_check() {
-    let gender_match = document.querySelector('input[name = Gender]:checked'.value); 
-     console.log("done"); 
-    
-}
-
-function phone_check(){
-  let phone_match = document.forms["myForm"]["p_input"].value;
-  let phoneRegex = /^\d{10}$/; // Regular expressions for validation   // Allows exactly 10 digits
-  if (!phoneRegex.test(phone_match)) { //test method is use for match in a string  //If it finds a match, it returns true, otherwise it returns false.
-        // alert("phone is not valid."); // it will execute without preventDefault
-        document.getElementById('red2').style.display = "block";
-  }
-  else{
-    console.log("phone ok");
-  }
-}
-
-function email_check(){
-  let email_match = document.forms["myForm"]["e_input"].value;
-  let emailRegex = /^[a-z0-9]+@gmail.com$/;
-  if(!emailRegex.test(email_match)){
-    document.getElementById('red3').style.display = "block";
-  }
-  else{
-    console.log("email ok");
-  }
-}
-
-function dob_check(){
-  let dob_match = document.forms["myForm"]["dob_input"].value;
-  let dateRegex = /^\d{2}-\d{2}-\d{4}$/
-  if(dateRegex.test(dob_match)){
-    document.getElementById('red_b').style.display = "block";
-  }
-  else{
-    console.log("dob ok");
-  }
-}
-
-class dataOfUser {
-  constructor(Firstname, lastName, phoneno, emailadd, gendercheck, birthdate) {
-    this.Fullname = Firstname + " " + lastName;
-    this.Phone_number = phoneno;
-    this.Email = emailadd;
-    this.Gender = gendercheck;
-    this.BirthDate = birthdate;
-    this.Year_of_birth = this.BirthDate.substring(0, 4);
-  }
-}
-
-let data_ofuser = 1;
-function pushed_obj(Firstname, lastName, phoneno, emailadd, gendercheck, birthdate){
-    let data_ofuser = new dataOfUser(Firstname, lastName, phoneno, emailadd, gendercheck, birthdate);
-    data.push(data_ofuser);
-    data_ofuser += 1;
-}
-
-function object_of_data() {
-    if (name_check() && gender_check() && phone_check() && email_check() && dob_check()) {
-        console.log("SUCCESS");
-        let Firstname = document.forms["myForm"]["f_Name"].value;
-        let lastName = document.forms["myForm"]["l_Name"].value;
-        let gendercheck = document.querySelector('input[name = Gender]:checked'.value); 
-        let phoneno = document.forms["myForm"]["p_input"].value;
-        let emailadd = document.forms["myForm"]["e_input"].value;
-        let birthdate = document.forms["myForm"]["dob_input"].value;
+      <form name="myForm" style="text-align: center;">
+        <label>First Name : </label></br>
+        <input id="first_name" type="text" required>
+        <span class="required_details" id="red1">* Enter valid fname </span></br>
         
-        pushed_obj(Firstname, lastName, phoneno, emailadd, gendercheck, birthdate);
-        Firstname = "";
-        lastName = "";
-        gendercheck = "";
-        phoneno = "";
-        emailadd = "";
-        birthdate = "";
-    }
-}
-let data = [];
-function view_data() {
-  Form_validate(event);
-  // data = [];
-    document.getElementById('table_of_data').style.display = "block";
-    let tbl = "";
-    tbl += 
-    `<tr>
-        <th>Full Name</th>
-        <th>Mobile Number</th>
-        <th>Email address</th>
-        <th>Gender</th>
-        <th>Birthdate</th>
-        <th>Birthyear</th>
-    </tr>`
-        data.map((val, index, arr) => {
-            tbl += `<tr>
-                        <td>${data[index].Fullname}</td>
-                        <td>${data[index].Phone_number}</td>
-                        <td>${data[index].Email}</td>
-                        <td>${data[index].Gender}</td>
-                        <td>${data[index].BirthDate}</td>
-                        <td>${data[index].Year_of_birth}</td>
-                    </tr>`
-        })
-    document.getElementById('table_data').innerHTML = tbl;
-    if(data = []){
-        alert("No data found");
-    }
-    else{
-        alert("Data dispatched successfully scroll down to see data");
-    }
-}
-function data_of21th() {
-  Form_validate(event);
-  filter_data_ = [];    
-    data.filter(function year_filter(val, index, arr) {
-        if (data[index].Year_of_birth >= 2000) {
-            filter_data_.push(data[index]);
-        }
-    })
-    document.getElementById('table_of_data').style.display = "block";
-    let tbl = "";
-    tbl += `
-    <tr>
-        <th>Full Name</th>
-        <th>Mobile Number</th>
-        <th>Email address</th>
-        <th>Gender</th>
-        <th>Birthdate</th>
-        <th>Birthyear</th>
-    </tr>
-    `
-    filter_data_.map((val, index, arr) => {
-        tbl += `
-        <tr>
-          <td>${filter_data_[index].Fullname}</td>
-          <td>${filter_data_[index].Phone_number}</td>
-          <td>${filter_data_[index].Email}</td>
-          <td>${filter_data_[index].Gender}</td>
-          <td>${filter_data_[index].BirthDate}</td>
-          <td>${filter_data_[index].Year_of_birth}</td>
-        </tr>
-        `
-    })
-    document.getElementById('table_data').innerHTML = tbl;
-    console.log(filter_data_);
-    if(filter_data_ = []){
-        alert("No such data with born year equal or above 2000")
-    }
-    else{
-        alert("Data with born year equal or above 2000 is dispatched successfully scroll down to see data");
-    }
-    console.log(filter_data_);
-}
+          <label>Last Name : </label></br>
+          <input id="last_name" type="text" required>
+          <span class="required_details" id="red1_1">* Enter valid lname </span></br>  
+      
+          <label>Gender : </label></br>
+          <span>Male</span><input  name="Gender" type="radio" value="Male"  required>
+          <span>Female</span><input  name="Gender" type="radio" value="Female" checked required>
+          <span>Others</span><input  name="Gender" type="radio" value="Others" required>           
+          <span class="required_details" id="red_g">* select gender </span></br> 
+      
+          <label>Mobile No. : </label></br>
+          <input id="mobile_number" type="tel" minlength="10" maxlength="10" required>
+          <span class="required_details" id="red2">* Enter 10 digits</span></br>
+      
+          <label>Email : </label></br>
+          <input id="email_id" type="email" required>
+          <span class="required_details" id="red3">* Enter email with @ and gmail.com </span></br>
+      
+          <label>BirthDate : </label>
+          <input id="birth_date" type="date" class="input_birth" minlength="2" maxlength="4" required>
+          <span class="required_details" id="red_b">* Enter birthdate</span></br>
+          
+          <center>              
+            <button type="button" onclick="alldata_submit()">submit</button>             
+            <button type="button" onclick="view_data()">view submitted data </button>
+            <button type="button" onclick="filter_data()">Data of 20<sup>th</sup> century</button>             
+          </center>
+          </form>
+        </div>
+     <div class="table_d">
+       <h2>All data</h2>
+       <table style="display: none;" id="data_table" align="center" border="2">
+        <tbody id="table_data" border="2"> </tbody>
+    </table>
 
-  </script>
+    <h2>data of 20th century</h2> 
+    <table style="display: none;margin-top: 30px;" id="year_table" align="center" border="2">
+      <tbody id="year_data" border="2"> </tbody>
+    </table>
+     </div>
+  </div>
+    <script src="form_validation.js" > </script>
 </body>
 </html>
-
-
-
