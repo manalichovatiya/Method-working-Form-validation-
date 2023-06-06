@@ -11,7 +11,7 @@ function alldata_submit() {
 }
 function f_name_check(){
   let name_match_f = document.getElementById('first_name').value;
-  let nameRegex = /^[a-zA-Z]{4,15}$/;
+  let nameRegex = /^[a-zA-Z]{4,10}$/;
   if (nameRegex.test(name_match_f)) {       
     document.getElementById('red1').style.display = "none";
     // console.log("fname ok");
