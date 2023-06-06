@@ -9,72 +9,105 @@ function alldata_submit() {
     date_check();
     object_new();
 }
-function f_name_check(){
-  let name_match_f = document.getElementById('first_name').value;
-  let nameRegex = /^[a-zA-Z]{4,10}$/;
-  if (nameRegex.test(name_match_f)) {       
-    document.getElementById('red1').style.display = "none";
-    // console.log("fname ok");
-    return true;
+function f_name_check(){ 
+  try {
+    let name_match_f = document.getElementById('first_name').value;
+    let nameRegex = /^[a-zA-Z]{4,10}$/;
+    if (nameRegex.test(name_match_f)) {       
+      document.getElementById('red1').style.display = "none";
+      return true;
+    }
+    else {
+      throw "Invalid first name. It should contain only letters and be between 4 and 10 characters long.";
+    }
   }
-  else{
+  catch (error) {
     document.getElementById('red1').style.display = "block";
+    throw error;
   }
 }
 function l_name_check(){
-  let name_match_l = document.getElementById('last_name').value;
-  let nameRegex = /^[a-zA-Z]{4,10}$/;
-  if (nameRegex.test(name_match_l)) {       
-    document.getElementById('red1_1').style.display = "none";
-    // console.log("lname ok");
-    return true;
+  try {
+    let name_match_l = document.getElementById('last_name').value;
+    let nameRegex = /^[a-zA-Z]{4,10}$/;
+    if (nameRegex.test(name_match_l)) {       
+      document.getElementById('red1_1').style.display = "none";
+      return true;
+    }
+    else {
+      throw "Invalid last name. It should contain only letters and be between 4 and 10 characters long.";
+    }
   }
-  else{
+  catch (error) {
     document.getElementById('red1_1').style.display = "block";
+    throw error;
   }
 }
 
 function moblie_check() {
-  let phone_match = document.getElementById('mobile_number').value;
-  let phoneRegex = /^\d{10}$/;
-  if (phoneRegex.test(phone_match)) {       
-    document.getElementById('red2').style.display = "none";
-    // console.log("phone ok");
-    return true;
+  try {
+    let phone_match = document.getElementById('mobile_number').value;
+    let phoneRegex = /^\d{10}$/;
+    if (phoneRegex.test(phone_match)) {       
+      document.getElementById('red2').style.display = "none";
+      return true;
+    }
+    else {
+      throw "Invalid mobile number. It should be a 10-digit number.";
+    }
   }
-  else{
+  catch (error) {
     document.getElementById('red2').style.display = "block";
+    throw error;
   }
 }
 
 function email_check() {
-  let email_value = document.getElementById('email_id').value;
-  let emailRegex = /^[a-z0-9]+@gmail.com$/;
-      if(emailRegex.test(email_value)){
-        document.getElementById('red3').style.display = "none";
-      // console.log("email ok");
-        return true;
-      }
-      else {
-        document.getElementById('red3').style.display = "block";
-      }
+  try {
+    let email_value = document.getElementById('email_id').value;
+    let emailRegex = /^[a-z0-9]+@gmail.com$/;
+    if (emailRegex.test(email_value)) {
+      document.getElementById('red3').style.display = "none";
+      return true;
+    }
+    else {
+      throw "Invalid email address. It should be a valid Gmail address.";
+    }
+  }
+  catch (error) {
+    document.getElementById('red3').style.display = "block";
+    throw error;
+  }
 }
 
 function gender_check() {
-    let gender_value = document.querySelector('input[name = Gender]:checked').value;
+  try {
+    let gender_value = document.querySelector('input[name=Gender]:checked');
+    if (gender_value === null) {
+      throw "Please select a gender.";
+    }
     // console.log("done"); 
     return true;
+  }
+  catch (error) {
+    throw error;
+  }
 }
 function date_check(){
+  try {
     let date_value = document.getElementById('birth_date').value;
-    if(date_value != ""){
+    if (date_value !== "") {
       document.getElementById('red_b').style.display = "none";
-      // console.log("dob ok");
-        return true;
+      return true;
     }
-    else{
-      document.getElementById('red_b').style.display = "block";
+    else {
+      throw "Please enter a valid birth date.";
     }
+  }
+  catch (error) {
+    document.getElementById('red_b').style.display = "block";
+    throw error;
+  }
 }   
 class Person {
     constructor(fName, lName, mobile_val, email_value, gender_value, birth_value) {
@@ -93,7 +126,7 @@ function object_push(fName, lName, mobile_val, email_value, gender_value, birth_
     alert("Data submitted !");
 }
 function object_new() {
-    if (f_name_check() && l_name_check() && moblie_check() && email_check() && gender_check() && date_check()) {
+  if (f_name_check() && l_name_check() && moblie_check() && email_check() && gender_check() && date_check()) {
         let fName = document.getElementById('first_name').value;
         let lName = document.getElementById('last_name').value;
         let mobile_val = document.getElementById('mobile_number').value;
@@ -105,6 +138,7 @@ function object_new() {
 }
 function view_data() {
     document.getElementById('data_table').style.display = "block";
+    document.getElementById('h2ofdata').style.display = "block";
     let tbl = "";
     tbl += `<tr>
                 <th>Full Name</th>
@@ -131,6 +165,7 @@ function view_data() {
       else {
         alert("Now you can see data");
         document.getElementById('table_data').innerHTML = tbl;
+        document.getElementById('h2ofdata').style.display = "block";
     }
 }
 function filter_data() {
@@ -141,6 +176,7 @@ function filter_data() {
         }
     })
     document.getElementById('year_table').style.display = "block";
+    document.getElementById('h2data').style.display = "block";
     let tbl = "";
     tbl += `<tr>
                 <th>Full Name</th>
@@ -163,10 +199,11 @@ function filter_data() {
         `
     })
     if (data_of_year.length == 0) {
-        alert("Here is No data with born year equal or above 2000")
+        alert("Here is No data with born year equal or above 2000");
       }
       else {
         alert("Data of 20th century");
         document.getElementById('year_data').innerHTML = tbl;
+        document.getElementById('h2data').style.display = "block";
     }
 }
