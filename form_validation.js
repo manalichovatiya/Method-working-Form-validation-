@@ -23,7 +23,7 @@ function f_name_check(){
 }
 function l_name_check(){
   let name_match_l = document.getElementById('last_name').value;
-  let nameRegex = /^[a-zA-Z]{4,30}$/;
+  let nameRegex = /^[a-zA-Z]{4,10}$/;
   if (nameRegex.test(name_match_l)) {       
     document.getElementById('red1_1').style.display = "none";
     // console.log("lname ok");
